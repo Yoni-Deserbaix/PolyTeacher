@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from translator.models import Translation
 from translator.serializers import TranslationSerializer
+from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 import google.generativeai as genai
 import os
@@ -22,9 +23,14 @@ GEMINI_API_KEY = os.environ.get('GOOGLE_API_KEY')
 
 class AllTranslation(APIView):
 
+    @swagger_auto_schema(
+                manual_parameters=[
+                    openapi.Parameter('source_text', openapi.IN_QUERY, type=openapi.TYPE_STRING, description="source_text"),
+                    openapi.Parameter('source_language', openapi.IN_QUERY, type=openapi.TYPE_STRING, description="source_language"),
+                    openapi.Parameter('target_language', openapi.IN_QUERY, type=openapi.TYPE_STRING, description="target_language"),
+                ])
     def get(self, request):
 
-        print(GEMINI_API_KEY)
         result = Translation.objects.all()
         serialized_data = TranslationSerializer(result, many=True)
         return Response(data={'results': serialized_data.data}, status=status.HTTP_200_OK)
