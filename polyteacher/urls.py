@@ -16,9 +16,6 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from translator.views import index
-from translator.views import FrenchSpanishTranslationViewSet
-from translator.views import FrenchEnglishTranslationViewSet
 from translator.views import AllTranslation
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
@@ -38,6 +35,4 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/all_translations/', AllTranslation.as_view(), name='all_translations'),
     path('', schema_view.with_ui('redoc', cache_timeout=0)),
-    # path('api/french_spanish_translator/', FrenchSpanishTranslationViewSet.as_view(), name='french_spanish_translator'),
-    # path('api/french_english_translator/', FrenchEnglishTranslationViewSet.as_view(), name='french_english_translator'),
 ]
