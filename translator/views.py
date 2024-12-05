@@ -48,7 +48,7 @@ class AllTranslation(APIView):
         genai.configure(api_key=GEMINI_API_KEY)
         model = genai.GenerativeModel("gemini-1.5-flash")
         response = model.generate_content(prompt)
-        target_text = response.text
+        target_text = response.text.strip()
 
         translation = Translation.objects.create(
             source_language=source_language,
